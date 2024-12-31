@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.Dp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,11 +89,18 @@ fun JogoCobrinha() {
     }
     //Tela
 BoxWithConstraints(){
+    var posicao:Pair<Dp,Dp>
     var dimensaoPonto=maxWidth/16
+
     Column() {
-        texto = "Jogo da Cobrinha ${game.posicaoAtual}  "
+        texto = "Jogo da Cobrinha ${game.posicaoAtual.first} ${game.posicaoAtual.second} ${game.posicaoAtual} "
         Text(text = texto)
 
+        posicao=Pair(
+            dimensaoPonto*game.posicaoAtual.first,
+            dimensaoPonto*game.posicaoAtual.second)
+  //      px=
+  //      py= dimensaoPonto*game.posicaoAtual.second
         BoxWithConstraints() {
             Box(
                 Modifier
@@ -101,10 +109,9 @@ BoxWithConstraints(){
                     .border(2.dp, Color.Green)
             ) {
             }
-
             Box(
                 modifier = Modifier
-                    .offset(x = dimensaoPonto * game.posicaoAtual , y = dimensaoPonto * 7)
+                    .offset(x = posicao.first , y = posicao.second)
                     .size( dimensaoPonto )
                     .background(
                         Color.DarkGray,
