@@ -8,7 +8,7 @@ import androidx.compose.runtime.setValue
 class Game(){
 
     var direcaoAtual by mutableStateOf(Pair(0,1))
-        private set
+
     var posicaoAtual by mutableStateOf(Pair(7,7))
         private set
     var posicaoX by mutableStateOf(posicaoAtual.first)

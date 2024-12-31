@@ -9,15 +9,20 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
@@ -34,6 +39,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 
@@ -89,18 +95,20 @@ fun JogoCobrinha() {
     }
     //Tela
 BoxWithConstraints(){
+    val tamBotaoMod = Modifier.size(64.dp)
     var posicao:Pair<Dp,Dp>
     var dimensaoPonto=maxWidth/16
 
-    Column() {
+    Column( modifier = Modifier.background(Color.LightGray),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally) {
         texto = "Jogo da Cobrinha ${game.posicaoAtual.first} ${game.posicaoAtual.second} ${game.posicaoAtual} "
         Text(text = texto)
 
         posicao=Pair(
             dimensaoPonto*game.posicaoAtual.first,
             dimensaoPonto*game.posicaoAtual.second)
-  //      px=
-  //      py= dimensaoPonto*game.posicaoAtual.second
+
         BoxWithConstraints() {
             Box(
                 Modifier
@@ -119,7 +127,41 @@ BoxWithConstraints(){
                     )
             )
         }
+        Column(horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(24.dp)) {
+            Button(
+                onClick = { game.direcaoAtual = Pair(0, -1) },
+                modifier = tamBotaoMod,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Text("Cima")
+            }
+            Row {
+               Button(
+                    onClick = { game.direcaoAtual = Pair(-1, 0) },
+                    modifier = tamBotaoMod,
+                    shape = RoundedCornerShape(16.dp)
+               ){
+                    Text("Esquerda")
+               }
+                Spacer(modifier = tamBotaoMod)
+                Button(
+                    onClick = { game.direcaoAtual = Pair(1, 0) },
+                    modifier = tamBotaoMod,
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Text("Direita")
+                }
+            }
+            Button(
+                onClick = { game.direcaoAtual=Pair(0,1) },
+                modifier = tamBotaoMod,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Text("Baixo")
+            }
 
+        }
         Button(
             onClick = { jogoRodando = !jogoRodando },
             modifier = Modifier.fillMaxWidth(),
@@ -127,7 +169,7 @@ BoxWithConstraints(){
             Text(if (jogoRodando) "Pause" else "Start")
         }
     }
-  }
+  } 
 }
 
 
