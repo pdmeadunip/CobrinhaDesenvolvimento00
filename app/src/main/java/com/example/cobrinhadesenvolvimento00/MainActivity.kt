@@ -88,8 +88,9 @@ fun JogoCobrinha() {
     }
     //Tela
 BoxWithConstraints(){
+    var dimensaoPonto=maxWidth/16
     Column() {
-        texto = "Jogo da Cobrinha ${game.contador}  "
+        texto = "Jogo da Cobrinha ${game.posicaoAtual}  "
         Text(text = texto)
 
         BoxWithConstraints() {
@@ -103,8 +104,8 @@ BoxWithConstraints(){
 
             Box(
                 modifier = Modifier
-                    .offset(x = game.contador.dp , y = 30.dp)
-                    .size(30.dp)
+                    .offset(x = dimensaoPonto * game.posicaoAtual , y = dimensaoPonto * 7)
+                    .size( dimensaoPonto )
                     .background(
                         Color.DarkGray,
                         Shapes().small

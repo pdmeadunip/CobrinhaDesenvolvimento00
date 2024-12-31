@@ -7,12 +7,13 @@ import androidx.compose.runtime.setValue
 
 
 class Game(){
-    var contador by mutableStateOf(0)
+    var posicaoAtual by mutableStateOf(0)
         private set
     suspend fun roda(){
-        while(contador<1000){
+        while(posicaoAtual<1000){
             delay(1000)
-            contador++
+            posicaoAtual++
+            posicaoAtual=posicaoAtual % 16
         }
     }
 }
