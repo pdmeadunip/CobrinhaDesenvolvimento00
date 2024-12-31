@@ -6,7 +6,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 
 class Game(){
-
+    var comida by mutableStateOf(Pair(5,5))
+    var cobra by mutableStateOf(
+        mutableListOf(Pair(7,7),Pair(7,6),Pair(7,5))
+    )
     var direcaoAtual by mutableStateOf(Pair(0,1))
 
     var posicaoAtual by mutableStateOf(Pair(7,7))
@@ -19,6 +22,8 @@ class Game(){
             posicaoY = (posicaoY+direcaoAtual.second+16)%16
             posicaoAtual=Pair(posicaoX,posicaoY)
             delay(1000)
+            cobra.add(0,posicaoAtual)
+            cobra=cobra.take(3).toMutableList()
         }
     }
 }

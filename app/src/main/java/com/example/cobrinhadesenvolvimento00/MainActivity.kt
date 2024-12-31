@@ -1,7 +1,5 @@
 package com.example.cobrinhadesenvolvimento00
 
-import android.R.attr.onClick
-import android.R.attr.text
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,31 +18,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.example.cobrinhadesenvolvimento00.ui.theme.CobrinhaDesenvolvimento00Theme
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.example.cobrinhadesenvolvimento00.ui.theme.CobrinhaDesenvolvimento00Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,13 +92,14 @@ fun JogoCobrinha() {
     //Tela
 BoxWithConstraints(){
     val tamBotaoMod = Modifier.size(64.dp)
+    val corpoCobra = game.cobra
     var posicao:Pair<Dp,Dp>
     var dimensaoPonto=maxWidth/16
 
     Column( modifier = Modifier.background(Color.LightGray),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
-        texto = "Jogo da Cobrinha ${game.posicaoAtual.first} ${game.posicaoAtual.second} ${game.posicaoAtual} "
+        texto = "Jogo da Cobrinha ${corpoCobra.size} ${corpoCobra} "
         Text(text = texto)
 
         posicao=Pair(
@@ -120,15 +114,17 @@ BoxWithConstraints(){
                     .border(2.dp, Color.Green)
             ) {
             }
-            Box(
-                modifier = Modifier
-                    .offset(x = posicao.first , y = posicao.second)
-                    .size( dimensaoPonto )
-                    .background(
-                        Color.DarkGray,
-                        Shapes().small
-                    )
-            )
+            corpoCobra.forEach { corpo ->
+                Box(
+                    modifier = Modifier
+                        .offset(x = dimensaoPonto * corpo.first, y = dimensaoPonto * corpo.second)
+                        .size(dimensaoPonto)
+                        .background(
+                            Color.DarkGray,
+                            Shapes().small
+                        )
+                )
+            }
         }
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(24.dp)) {
