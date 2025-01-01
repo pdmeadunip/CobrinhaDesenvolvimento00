@@ -4,9 +4,9 @@ import androidx.compose.runtime.mutableStateOf
 import kotlinx.coroutines.delay
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-//class Game(onAndaPara:(Boolean) -> Unit){
+
 class Game(){
-//    var onAndaPara by mutableStateOf(onAndaPara)
+    //variáveis
     var gameOver by mutableStateOf(false)
     var tamanho by mutableStateOf(3)
     var comida by mutableStateOf(Pair(5,5))
@@ -19,22 +19,27 @@ class Game(){
         private set
     var posicaoX by mutableStateOf(posicaoAtual.first)
     var posicaoY by mutableStateOf(posicaoAtual.second)
+    //Função principal
     suspend fun roda(){
+        //laço infinito
         while(true){
+            //definindo a nova posição da cabeça da cobra
             posicaoX = (posicaoX+direcaoAtual.first+16)%16
             posicaoY = (posicaoY+direcaoAtual.second+16)%16
             posicaoAtual=Pair(posicaoX,posicaoY)
-
+            // Verificando se a cobra colidiu com ela mesma
             if(cobra.contains(posicaoAtual)){
                 gameOver=true
-        //        onAndaPara(false)
                 reset()
             }else{
-            cobra.add(0,posicaoAtual)
+                //adicionando a nova posição da cabeça da cobra
+                cobra.add(0,posicaoAtual)
+                //verificando se a cobra comeu a comida
                 if(posicaoAtual==comida){
                     comida=Pair((1..15).random(),(1..15).random())
                     tamanho++
                 }
+                //ajustando o tamanho da cobra
                 cobra=cobra.take(tamanho).toMutableList()
             }
 

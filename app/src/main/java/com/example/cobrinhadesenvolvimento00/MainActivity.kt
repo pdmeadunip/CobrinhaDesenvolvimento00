@@ -117,6 +117,7 @@ BoxWithConstraints(){
             corTexto = Color.White
             var corFundo = Color.Blue
         }
+
         Box(
             Modifier
                 .fillMaxWidth()
@@ -134,18 +135,19 @@ BoxWithConstraints(){
                 fontStyle = FontStyle.Italic)
         }
 
-
+        //Conjunto da área de ação
+        //Náo tem Column nem row porque os elementos ficam sobrepostos
 
         BoxWithConstraints() {
 
-
+            //Campo de jogo
             Box(
                 Modifier
                     .size(maxWidth)
                     .background(Color.White)
                     .border(2.dp, Color.Green)
-            ) {
-            }
+            ) { }
+            //Comida
             Box(
                 modifier = Modifier
                     .offset(
@@ -155,6 +157,7 @@ BoxWithConstraints(){
                     .size(dimensaoPonto)
                     .background(Color.Red, Shapes().small))
             {}
+            //Cobra
             corpoCobra.forEach { corpo ->
                 Box(
                     modifier = Modifier
@@ -167,6 +170,7 @@ BoxWithConstraints(){
                 )
             }
         }
+        //Área dos botões de direção
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(24.dp)) {
             Button(
@@ -214,6 +218,7 @@ BoxWithConstraints(){
             }
 
         }
+        //Botão Start / Reset
         Button(
             onClick = {
                         game.gameOver=false
