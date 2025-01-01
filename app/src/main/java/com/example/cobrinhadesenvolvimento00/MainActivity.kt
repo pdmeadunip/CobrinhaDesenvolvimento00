@@ -95,6 +95,7 @@ BoxWithConstraints(){
     val corpoCobra = game.cobra
     var posicao:Pair<Dp,Dp>
     var dimensaoPonto=maxWidth/16
+    var comidaAtual=game.comida
 
     Column( modifier = Modifier.background(Color.LightGray),
         verticalArrangement = Arrangement.Top,
@@ -102,9 +103,9 @@ BoxWithConstraints(){
         texto = "Jogo da Cobrinha ${corpoCobra.size} ${corpoCobra} "
         Text(text = texto)
 
-        posicao=Pair(
-            dimensaoPonto*game.posicaoAtual.first,
-            dimensaoPonto*game.posicaoAtual.second)
+//        posicao=Pair(
+//            dimensaoPonto*game.posicaoAtual.first,
+//            dimensaoPonto*game.posicaoAtual.second)
 
         BoxWithConstraints() {
             Box(
@@ -114,6 +115,12 @@ BoxWithConstraints(){
                     .border(2.dp, Color.Green)
             ) {
             }
+            Box(
+                modifier = Modifier
+                    .offset(x = dimensaoPonto*comidaAtual.first, y = dimensaoPonto*comidaAtual.second)
+                    .size(dimensaoPonto)
+                    .background(Color.Red, Shapes().small))
+            {}
             corpoCobra.forEach { corpo ->
                 Box(
                     modifier = Modifier
