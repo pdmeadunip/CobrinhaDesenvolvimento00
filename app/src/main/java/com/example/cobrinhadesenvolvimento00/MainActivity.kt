@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,9 +35,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cobrinhadesenvolvimento00.ui.theme.CobrinhaDesenvolvimento00Theme
 
 class MainActivity : ComponentActivity() {
@@ -59,10 +64,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(
-            text = "Hello $name!",
-            modifier = modifier
-        )
+        Spacer(modifier = Modifier.height(30.dp))
         JogoCobrinha()
     }
 }
@@ -97,23 +99,46 @@ BoxWithConstraints(){
     var posicao:Pair<Dp,Dp>
     var dimensaoPonto=maxWidth/16
     var comidaAtual=game.comida
+    var corTexto = Color.White
+    var corFundo = Color.Blue
 
     Column( modifier = Modifier.background(Color.LightGray),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
+        // Texto placar/Game Over
         if (game.gameOver) {
             texto = "Game Over"
+            corTexto = Color.White
+            corFundo = Color.Red
             jogoRodando = false
-        } else {
-            texto = "Jogo da Cobrinha ${corpoCobra.size} ${corpoCobra} "
-        }
-        Text(text = texto)
 
-//        posicao=Pair(
-//            dimensaoPonto*game.posicaoAtual.first,
-//            dimensaoPonto*game.posicaoAtual.second)
+        } else {
+            texto = "PLACAR ${game.tamanho}"
+            corTexto = Color.White
+            var corFundo = Color.Blue
+        }
+        Box(
+            Modifier
+                .fillMaxWidth()
+                .background(corFundo)
+                .border(2.dp, Color.Green)
+                .padding(20.dp),
+            contentAlignment = Alignment.Center
+
+        ) {
+            Text(text = texto,
+                color = corTexto,
+                textAlign = TextAlign.Center,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Italic)
+        }
+
+
 
         BoxWithConstraints() {
+
+
             Box(
                 Modifier
                     .size(maxWidth)
@@ -123,7 +148,10 @@ BoxWithConstraints(){
             }
             Box(
                 modifier = Modifier
-                    .offset(x = dimensaoPonto*comidaAtual.first, y = dimensaoPonto*comidaAtual.second)
+                    .offset(
+                        x = dimensaoPonto * comidaAtual.first,
+                        y = dimensaoPonto * comidaAtual.second
+                    )
                     .size(dimensaoPonto)
                     .background(Color.Red, Shapes().small))
             {}
