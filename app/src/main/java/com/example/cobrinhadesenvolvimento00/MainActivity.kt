@@ -81,6 +81,7 @@ fun GreetingPreview() {
 fun JogoCobrinha() {
 //  variáveis
     var jogoRodando by remember { mutableStateOf(false) }
+    //val game = remember{Game(onAndaPara = { jogoRodando = it })}
     val game = remember{Game()}
     var texto = ""
 //Controle
@@ -100,7 +101,12 @@ BoxWithConstraints(){
     Column( modifier = Modifier.background(Color.LightGray),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally) {
-        texto = "Jogo da Cobrinha ${corpoCobra.size} ${corpoCobra} "
+        if (game.gameOver) {
+            texto = "Game Over"
+            jogoRodando = false
+        } else {
+            texto = "Jogo da Cobrinha ${corpoCobra.size} ${corpoCobra} "
+        }
         Text(text = texto)
 
 //        posicao=Pair(
@@ -181,10 +187,13 @@ BoxWithConstraints(){
 
         }
         Button(
-            onClick = { jogoRodando = !jogoRodando },
+            onClick = {
+                        game.gameOver=false
+                        game.reset()
+                        jogoRodando = !jogoRodando},
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(if (jogoRodando) "Pause" else "Start")
+            Text(if (jogoRodando) "Reset" else "Start")
         }
     }
   } 
